@@ -6,7 +6,12 @@ terraform {
   }
 }
 
-provider "snyk" {
-  #  api_key  = "API_KEY"  # can also provide in env as SNYK_API_KEY
-  #  org_id   = "ORG_ID"   # can also provide in env as SNYK_ORG_ID
+provider "snyk" {}
+
+data "snyk_project" "one" {
+  name = "mikesupertrampster-corp/blockchain:simple/go.mod"
+}
+
+output "test" {
+  value = data.snyk_project.one
 }

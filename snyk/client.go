@@ -50,7 +50,6 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body []
 	if err != nil {
 		return nil, err
 	}
-	//defer resp.Body.Close()
 
 	if resp.StatusCode == 401 {
 		return nil, ErrInvalidAuthn

@@ -9,6 +9,11 @@ import (
 	"net/http"
 )
 
+type Project struct {
+	Id   string `json:"id"`
+	Name string `json:"name"`
+}
+
 func DataSourceProject() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceProjectRead,
@@ -23,11 +28,6 @@ func DataSourceProject() *schema.Resource {
 			},
 		},
 	}
-}
-
-type Project struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
 }
 
 func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
@@ -57,7 +57,8 @@ func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta int
 }
 
 func (c Client) GetProject(ctx context.Context, name string) (*Project, error) {
-	res, err := c.doRequest(ctx, http.MethodPost, fmt.Sprintf("org/%s/projects", c.orgId), nil)
+	var body = []byte(fmt.Sprintf(`{"filter": {"name": "%s"}}`, name))
+	res, err := c.doRequest(ctx, http.MethodPost, fmt.Sprintf("org/%s/projects", c.orgId), body)
 	if err != nil {
 		return nil, err
 	}
