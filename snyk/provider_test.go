@@ -31,6 +31,10 @@ func testAccPreCheck(t *testing.T) {
 		t.Fatal("SNYK_API_KEY must be set for acceptance tests")
 	}
 
+	if err := os.Getenv("SNYK_HOST_URL"); err == "" {
+		t.Fatal("SNYK_HOST_URL must be set for acceptance tests")
+	}
+
 	if err := os.Getenv("SNYK_ORG_ID"); err == "" {
 		t.Fatal("SNYK_ORG_ID must be set for acceptance tests")
 	}
