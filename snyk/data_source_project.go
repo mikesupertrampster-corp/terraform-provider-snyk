@@ -41,8 +41,16 @@ func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.FromErr(err)
 	}
 
-	d.Set("id", project.Id)
-	d.Set("name", project.Name)
+	err = d.Set("id", project.Id)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	err = d.Set("name", project.Name)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	d.SetId(project.Id)
 
 	return diags
@@ -62,7 +70,10 @@ func (c Client) GetProject(ctx context.Context, name string) (*Project, error) {
 	}
 
 	var projects []Project
-	json.Unmarshal(raw["projects"], &projects)
+	err = json.Unmarshal(raw["projects"], &projects)
+	if err != nil {
+		return nil, err
+	}
 
 	for _, element := range projects {
 		if element.Name == name {
