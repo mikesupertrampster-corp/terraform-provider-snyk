@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/mikesupertrampster-corp/terraform-provider-snyk/internal/snyk/client"
+	"github.com/mikesupertrampster-corp/terraform-provider-snyk/internal/snyk/api"
 	"net/http"
 )
 
@@ -34,7 +34,7 @@ func DataSourceProject() *schema.Resource {
 func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 
-	c := meta.(*client.Client)
+	c := meta.(*api.Client)
 	name := d.Get("name").(string)
 
 	project, err := c.GetProject(ctx, name)
@@ -57,7 +57,7 @@ func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta int
 	return diags
 }
 
-func (c client.Client) GetProject(ctx context.Context, name string) (*Project, error) {
+func (c api.Client) GetProject(ctx context.Context, name string) (*Project, error) {
 	var body = []byte(fmt.Sprintf(`{"filter": {"name": "%s"}}`, name))
 	res, err := c.doRequest(ctx, http.MethodPost, fmt.Sprintf("org/%s/projects", c.orgId), body)
 	if err != nil {
@@ -83,5 +83,5 @@ func (c client.Client) GetProject(ctx context.Context, name string) (*Project, e
 		}
 	}
 
-	return nil, ErrNotFound
+	return nil, api.ErrNotFound
 }

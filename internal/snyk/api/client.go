@@ -1,4 +1,4 @@
-package client
+package api
 
 import (
 	"bytes"
@@ -64,7 +64,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body []
 	return resp, nil
 }
 
-func (c Client) Validate(ctx context.Context) error {
+func (c *Client) Validate(ctx context.Context) error {
 	_, err := c.doRequest(ctx, http.MethodGet, "user/me", []byte{})
 	if err != nil {
 		return err

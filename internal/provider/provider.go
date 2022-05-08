@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/mikesupertrampster-corp/terraform-provider-snyk/internal/snyk/client"
+	"github.com/mikesupertrampster-corp/terraform-provider-snyk/internal/snyk/api"
 	"github.com/mikesupertrampster-corp/terraform-provider-snyk/internal/snyk/project"
 	"time"
 )
@@ -45,7 +45,7 @@ func Provider() *schema.Provider {
 func configure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
-	c := client.NewClient(d.Get("host_url").(string), d.Get("api_key").(string), d.Get("org_id").(string), 10*time.Second)
+	c := api.NewClient(d.Get("host_url").(string), d.Get("api_key").(string), d.Get("org_id").(string), 10*time.Second)
 
 	err := c.Validate(ctx)
 	if err != nil {
