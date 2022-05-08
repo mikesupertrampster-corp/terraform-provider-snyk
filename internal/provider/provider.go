@@ -5,6 +5,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/mikesupertrampster-corp/terraform-provider-snyk/internal/snyk/api"
+	"github.com/mikesupertrampster-corp/terraform-provider-snyk/internal/snyk/project"
 	"time"
 )
 
@@ -28,8 +29,10 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("SNYK_ORG_ID", nil),
 			},
 		},
-		ResourcesMap:   map[string]*schema.Resource{},
-		DataSourcesMap: map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{},
+		DataSourcesMap: map[string]*schema.Resource{
+			"snyk_project": project.DataSourceProject(),
+		},
 	}
 
 	p.ConfigureContextFunc = func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
