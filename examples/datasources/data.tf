@@ -5,3 +5,9 @@ data "snyk_project" "blockchain_simple" {
 output "blockchain_simple" {
   value = data.snyk_project.blockchain_simple
 }
+
+data "snyk_projects" "all" {}
+
+output "all_project_names" {
+  value = data.snyk_projects.all
+}

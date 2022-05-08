@@ -14,7 +14,7 @@ type Client struct {
 	ctx        context.Context
 	hostUrl    string
 	httpClient *http.Client
-	orgId      string
+	OrgId      string
 	userAgent  string
 }
 
@@ -31,7 +31,7 @@ func NewClient(hostUrl string, apiKey string, orgId string, timeout time.Duratio
 		apiKey:     apiKey,
 		hostUrl:    hostUrl,
 		httpClient: client,
-		orgId:      orgId,
+		OrgId:      orgId,
 		userAgent:  "terraform-provider-snyk",
 	}
 }

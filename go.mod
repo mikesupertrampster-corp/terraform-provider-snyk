@@ -2,7 +2,10 @@ module github.com/mikesupertrampster-corp/terraform-provider-snyk
 
 go 1.17
 
-require github.com/hashicorp/terraform-plugin-sdk/v2 v2.15.0
+require (
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.15.0
+	golang.org/x/net v0.0.0-20210326060303-6b1517762897
+)
 
 require (
 	github.com/agext/levenshtein v1.2.2 // indirect
@@ -38,7 +41,6 @@ require (
 	github.com/vmihailenco/msgpack/v4 v4.3.12 // indirect
 	github.com/vmihailenco/tagparser v0.1.1 // indirect
 	github.com/zclconf/go-cty v1.10.0 // indirect
-	golang.org/x/net v0.0.0-20210326060303-6b1517762897 // indirect
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	golang.org/x/text v0.3.5 // indirect
 	google.golang.org/appengine v1.6.6 // indirect

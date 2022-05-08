@@ -31,7 +31,8 @@ func Provider() *schema.Provider {
 		},
 		ResourcesMap: map[string]*schema.Resource{},
 		DataSourcesMap: map[string]*schema.Resource{
-			"snyk_project": project.DataSourceProject(),
+			"snyk_project":  project.DataSourceProject(),
+			"snyk_projects": project.DataSourceProjects(),
 		},
 	}
 
