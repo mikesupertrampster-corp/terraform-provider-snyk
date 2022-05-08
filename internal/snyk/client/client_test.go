@@ -1,4 +1,4 @@
-package snyk
+package client
 
 import (
 	"context"

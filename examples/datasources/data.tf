@@ -5,4 +5,3 @@ data "snyk_project" "blockchain_simple" {
 output "blockchain_simple" {
   value = data.snyk_project.blockchain_simple
 }
-

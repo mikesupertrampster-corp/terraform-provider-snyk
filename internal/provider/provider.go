@@ -1,9 +1,10 @@
-package snyk
+package provider
 
 import (
 	"context"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/mikesupertrampster-corp/terraform-provider-snyk/internal/snyk"
 	"time"
 )
 
@@ -29,7 +30,9 @@ func Provider() *schema.Provider {
 		},
 		ResourcesMap: map[string]*schema.Resource{},
 		DataSourcesMap: map[string]*schema.Resource{
-			"snyk_project": DataSourceProject(),
+			"snyk_organizations":         snyk.DataSourceOrganizations(),
+			"snyk_notification_settings": snyk.ResourceNotificationSettings(),
+			"snyk_project":               DataSourceProject(),
 		},
 	}
 
@@ -43,7 +46,7 @@ func Provider() *schema.Provider {
 func configure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
-	c := NewClient(d.Get("host_url").(string), d.Get("api_key").(string), d.Get("org_id").(string), 10*time.Second)
+	c := api.NewClient(d.Get("host_url").(string), d.Get("api_key").(string), d.Get("org_id").(string), 10*time.Second)
 
 	err := c.Validate(ctx)
 	if err != nil {

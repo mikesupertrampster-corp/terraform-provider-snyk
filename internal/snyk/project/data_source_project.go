@@ -1,4 +1,4 @@
-package snyk
+package project
 
 import (
 	"context"
